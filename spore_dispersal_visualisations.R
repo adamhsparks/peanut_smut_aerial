@@ -99,6 +99,56 @@ wr +
   xlab("") +
   theme_pubclean()
 
+# Spore counts density plot ---------
+ggplot(dat, aes(x = spores)) +
+  geom_density() +
+  xlab("Spores (n)") +
+  theme_pubclean()
+
+# Dispersal distance, no directions --------
+
+# All fields
+ggplot(dat, aes(x = distance_m,
+                y = spores)) +
+  geom_count() +
+  scale_size(breaks = c(1, 2, 4, 8)) +
+  stat_summary(fun.y = "median",
+               geom = "line",
+               na.rm = TRUE) +
+  stat_summary(
+    fun.y = "median",
+    colour = "red",
+    size = 2,
+    geom = "point"
+  ) +
+  scale_x_continuous(breaks = c(0, 10, 25, 50, 75)) +
+  ylim(c(-0.5, 9)) +
+  ylab("Spores (n)") +
+  xlab("Distance (m)") +
+  theme_pubclean()
+
+# Facet by field
+ggplot(dat, aes(x = distance_m,
+                y = spores)) +
+  geom_count() +
+  scale_size(breaks = c(1, 2, 4, 8)) +
+  stat_summary(fun.y = "median",
+               geom = "line",
+               na.rm = TRUE) +
+  stat_summary(
+    fun.y = "median",
+    colour = "red",
+    size = 2,
+    geom = "point"
+  ) +
+  scale_x_continuous(breaks = c(0, 10, 25, 50, 75)) +
+  ylim(c(-0.5, 9)) +
+  ylab("Spores (n)") +
+  xlab("Distance (m)") +
+  facet_wrap(. ~ field, ncol = 3) +
+  theme_pubclean()
+
+# Dispersal on a compass rose ------
 heat_dat <-
   dat %>%
   group_by(field, trap_coord_deg)
